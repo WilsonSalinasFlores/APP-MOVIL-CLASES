@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         var btnregistrasre= findViewById<Button>(R.id.btn_registrasre)
 
         btningresar.setOnClickListener {
-            val url = "http://10.0.2.2/WSAGENDA/datos/persona.php"
+            val url = "http://10.0.2.2:8080//WSAGENDA//datos/persona.php"
             var datos= JSONObject()
             datos.put("accion","login")
             datos.put("usuario",txtusu.text.toString())
@@ -38,13 +38,16 @@ class MainActivity : AppCompatActivity() {
                     val obj=(s)
                     if(obj.getBoolean("estado")){
                         val codigo=obj.getString("codigo")
+                        Toast.makeText(this,"Bienvenido $codigo", Toast.LENGTH_SHORT).show()
                     }else{
-                        Toast.makeText(applicationContext,"Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()
                     }
                 }catch (e: JSONException) {
-                    Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                 }
-            },{ volleyError ->Toast.makeText(applicationContext,volleyError.message, Toast.LENGTH_SHORT).show()})
+            },{ volleyError ->
+                val message = volleyError?.message ?: "Error desconocido al conectar"
+                Toast.makeText(this,message, Toast.LENGTH_SHORT).show()})
             rq.add(json)
 
         }
