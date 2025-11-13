@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         var btnregistrasre= findViewById<Button>(R.id.btn_registrasre)
 
         btningresar.setOnClickListener {
-            val url = "http://10.0.2.2:8080/WSAGENDA/datos/persona.php"
+            val url = "http://10.0.2.2:8080/wsagendacrud/datos/persona.php"
             var datos= JSONObject()
             datos.put("accion","login")
             datos.put("usuario",txtusu.text.toString())
@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
                     val obj=(s)
                     if(obj.getBoolean("estado")){
                         val codigo=obj.getString("codigo")
-                        val frm_lista = Intent(this, lista::class.java)
-                        frm_lista.putExtra("codigo",codigo)
+                        val frm_lista = Intent(this, Contactos::class.java)
+                        frm_lista.putExtra("cod_persona",codigo)
                         startActivity(frm_lista)
                     }else{
                         Toast.makeText(this,"Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()

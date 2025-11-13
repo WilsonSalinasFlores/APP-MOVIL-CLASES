@@ -15,7 +15,10 @@
         android:theme="@style/Theme.Agenda"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".lista"
+            android:name=".Contactos"
+            android:exported="false" />
+        <activity
+            android:name=".listaContactosActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
