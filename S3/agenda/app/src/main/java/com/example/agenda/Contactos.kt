@@ -48,9 +48,14 @@ class Contactos : AppCompatActivity() {
         btnnuevo.isEnabled=true
         consultar()
         btnnuevo.setOnClickListener {
-            bcajas()
+            bbotones()
             btncancelar.isEnabled=true
             btnguardar.isEnabled=true
+            lcajas()
+            acajas()
+        }
+        btnguardar.setOnClickListener{
+            insertar()
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -132,6 +137,37 @@ class Contactos : AppCompatActivity() {
                     ad.notifyDataSetChanged()
                 }else{
                     Toast.makeText(this,"No Existen contactos", Toast.LENGTH_SHORT).show()
+                }
+            }catch (e: JSONException) {
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+        },{ volleyError ->
+            val message = volleyError?.message ?: "Error desconocido al conectar"
+            Toast.makeText(this,message, Toast.LENGTH_SHORT).show()})
+        rq.add(json)
+    }
+    fun insertar(){
+        val url = "http://10.0.2.2:8080/wsagendacrud/datos/contacto.php"
+        val al = ArrayList<String>()
+        var datos= JSONObject()
+        datos.put("accion","insertar")
+        datos.put("cod_persona",txtcodigo.text)
+        datos.put("nombre",txtnombre.text)
+        datos.put("apellido",txtapellido.text)
+        datos.put("telefono",txttelefono.text)
+        datos.put("correo",txtcorreo.text)
+
+        val rq= Volley.newRequestQueue(this)
+        val json= JsonObjectRequest(Request.Method.POST,url,datos,{
+                s->
+            try {
+                val obj=(s)
+                if(obj.getBoolean("estado")) {
+                    Toast.makeText(this, obj.getString("mensaje"), Toast.LENGTH_SHORT).show()
+                    
+                } else
+                {
+                    Toast.makeText(this, obj.getString("mensaje"), Toast.LENGTH_SHORT).show()
                 }
             }catch (e: JSONException) {
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
