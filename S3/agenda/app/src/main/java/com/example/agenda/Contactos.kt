@@ -129,7 +129,7 @@ class Contactos : AppCompatActivity() {
                     for(i in 0  .. array.length()-1) {
                         val fila = array.getJSONObject(i)
                         codigos.add(fila.getString("codigo"))
-                        al.add(fila.getString("nombre") +" "+ fila .getString("apellido") )
+                        al.add(fila.getString("nombre") +" "+ fila .getString("apellido") +"-"+ fila.getString("telefono"))
 
                     }
                     val ad = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al)
